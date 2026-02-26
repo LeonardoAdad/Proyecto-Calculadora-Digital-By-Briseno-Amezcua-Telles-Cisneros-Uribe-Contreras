@@ -4,7 +4,7 @@ Proyecto de Tecnología Digital
 
 Equipo:
 - Estudiante 1: [Nombre] - Estructura Principal y Gestión de Datos
-- Estudiante 2: [Nombre] - Funciones Matemáticas
+- Estudiante 2: [Diego Telles Cisneros] - Funciones Matemáticas
 - Estudiante 3: [Nombre] - Conversores y Sistema de Historial
 
 Fecha: Febrero 2026
@@ -22,99 +22,29 @@ historial = []
 # ============================================
 
 def sumar(a, b):
-    """
-    Suma dos números.
-
-    Args:
-        a (float): Primer número
-        b (float): Segundo número
-
-    Returns:
-        float: Resultado de la suma
-    """
     return a + b
 
 
 def restar(a, b):
-    """
-    Resta dos números.
-
-    Args:
-        a (float): Primer número
-        b (float): Segundo número
-
-    Returns:
-        float: Resultado de la resta
-    """
-    # TODO: Implementar
-    pass
+    return a - b
 
 
 def multiplicar(a, b):
-    """
-    Multiplica dos números.
-
-    Args:
-        a (float): Primer número
-        b (float): Segundo número
-
-    Returns:
-        float: Resultado de la multiplicación
-    """
-    # TODO: Implementar
-    pass
+    return a * b
 
 
 def dividir(a, b):
-    """
-    Divide dos números.
-
-    Args:
-        a (float): Dividendo
-        b (float): Divisor
-
-    Returns:
-        float: Resultado de la división
-        None: Si b es cero
-
-    Raises:
-        None: Retorna None en lugar de lanzar excepción
-    """
-    # TODO: Implementar
-    # Verificar que b no sea cero
-    # Si b == 0, retornar None
-    # Si no, retornar a / b
-    pass
-
+    if b == 0:
+        raise ValueError("No se puede dividir por cero.")
+    return a / b
 
 def modulo(a, b):
-    """
-    Calcula el módulo (residuo) de dos números.
-
-    Args:
-        a (float): Dividendo
-        b (float): Divisor
-
-    Returns:
-        float: Residuo de la división
-    """
-    # TODO: Implementar
-    pass
-
+    if b == 0:
+        raise ValueError("No se puede calcular el módulo con divisor cero.")
+    return a % b
 
 def potencia(a, b):
-    """
-    Calcula a elevado a la potencia b.
-
-    Args:
-        a (float): Base
-        b (float): Exponente
-
-    Returns:
-        float: Resultado de a^b
-    """
-    # TODO: Implementar
-    pass
+    return a ** b
 
 
 # ============================================
@@ -122,74 +52,61 @@ def potencia(a, b):
 # ============================================
 
 def decimal_a_binario(numero):
-    """
-    Convierte un número decimal a binario usando algoritmo manual.
+    if numero == 0:
+        return "0"  
+    binario = ""
+    while numero > 0:
+        residuo = numero % 2
+        binario = str(residuo) + binario
+        numero //= 2
+    return binario
 
-    Args:
-        numero (int): Número decimal
 
-    Returns:
-        str: Representación binaria como string
-    """
-    # TODO: Implementar algoritmo de división sucesiva
-    # Algoritmo:
-    # 1. Crear string vacío para resultado
-    # 2. Mientras numero > 0:
-    #    - residuo = numero % 2
-    #    - agregar residuo al inicio del string
-    #    - numero = numero // 2
-    # 3. Retornar el string
-    # Caso especial: si numero == 0, retornar "0"
-    pass
 
 
 def decimal_a_hexadecimal(numero):
-    """
-    Convierte un número decimal a hexadecimal.
 
-    Args:
-        numero (int): Número decimal
+    if numero == 0:
 
-    Returns:
-        str: Representación hexadecimal como string
-    """
-    # TODO: Implementar
-    # Pueden usar el método similar a binario
-    # Recordar: 10=A, 11=B, 12=C, 13=D, 14=E, 15=F
-    pass
+        return "0"  
+    
+    hexadecimal = ""
+    caracteres = "0123456789ABCDEF"    
+
+    while numero > 0:
+        residuo = numero % 16
+        hexadecimal = caracteres[residuo] + hexadecimal
+        numero //= 16
+        
+    return hexadecimal
 
 
 def binario_a_decimal(binario):
-    """
-    Convierte un número binario (string) a decimal.
-
-    Args:
-        binario (str): Número binario como string
-
-    Returns:
-        int: Número decimal
-    """
-    # TODO: Implementar
-    # Algoritmo:
-    # 1. Inicializar decimal = 0
-    # 2. Para cada dígito en binario (de derecha a izquierda):
-    #    - decimal += dígito * (2 ^ posición)
-    # 3. Retornar decimal
-    pass
-
-
+    decimal = 0
+    longitud = len(binario)
+    for i in range(longitud):
+        bit = binario[longitud - 1 - i]
+        if bit == '1':
+            decimal += 2 ** i
+    return decimal
+ 
 def hexadecimal_a_decimal(hexadecimal):
-    """
-    Convierte un número hexadecimal (string) a decimal.
+    hexadecimal = hexadecimal.upper()
+    decimal = 0
+    caracteres = "0123456789ABCDEF"
+    longitud = len(hexadecimal)
 
-    Args:
-        hexadecimal (str): Número hexadecimal como string
+    for i in range(longitud):
+        
+        digito = hexadecimal[longitud - 1 - i]
+        valor = caracteres.find(digito)
 
-    Returns:
-        int: Número decimal
-    """
-    # TODO: Implementar
-    pass
+        if valor == -1:
+
+            raise ValueError(f"Carácter inválido en hexadecimal: {digito}")
+        decimal += valor * (16 ** i)
+
+    return decimal
 
 
 # ============================================
