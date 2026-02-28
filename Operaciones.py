@@ -3,7 +3,7 @@ Calculadora Multifuncional Interactiva - Versión Avanzada
 Proyecto de Tecnología Digital
 
 Equipo:
-- Estudiante 1: [Nombre] - Estructura Principal y Gestión de Datos
+- Estudiante 1: [Leonardo Adad Briseño Amezcua] - Estructura Principal y Gestión de Datos
 - Estudiante 2: [Diego Telles Cisneros] - Funciones Matemáticas
 - Estudiante 3: [Nombre] - Conversores y Sistema de Historial
 
@@ -113,50 +113,23 @@ def hexadecimal_a_decimal(hexadecimal):
 # SECCIÓN 3: CONVERSIÓN DE UNIDADES (Estudiante 3)
 # ============================================
 
-def bytes_a_kilobytes(bytes_val):
-    """
-    Convierte bytes a kilobytes.
-
-    Args:
-        bytes_val (float): Cantidad en bytes
-
-    Returns:
-        float: Cantidad en kilobytes
-    """
-    return bytes_val / 1024
-
-
 def kilobytes_a_megabytes(kb):
-    """
-    Convierte kilobytes a megabytes.
-
-    Args:
-        kb (float): Cantidad en kilobytes
-
-    Returns:
-        float: Cantidad en megabytes
-    """
-    # TODO: Implementar (1 MB = 1024 KB)
-    pass
-
+    return kb / 1024
 
 def megabytes_a_gigabytes(mb):
-    """
-    Convierte megabytes a gigabytes.
+    return mb / 1024
 
-    Args:
-        mb (float): Cantidad en megabytes
+def gigabytes_a_megabytes(gb):
+    return gb * 1024
 
-    Returns:
-        float: Cantidad en gigabytes
-    """
-    # TODO: Implementar
-    pass
+def megabytes_a_kilobytes(mb):
+    return mb * 1024
 
+def kilobytes_a_bytes(kb):
+    return kb * 1024
 
-# TODO: Implementar las funciones inversas
-# gigabytes_a_megabytes(), megabytes_a_kilobytes(), kilobytes_a_bytes()
-
+def bytes_a_kilobytes(kb):
+    return kb / 1024
 
 # ============================================
 # SECCIÓN 4: GESTIÓN DE HISTORIAL (Estudiante 3)
@@ -261,15 +234,7 @@ def cargar_historial_archivo():
 # ============================================
 
 def validar_numero(mensaje):
-    """
-    Solicita y valida un número al usuario.
-
-    Args:
-        mensaje (str): Mensaje a mostrar
-
-    Returns:
-        float: Número validado
-    """
+    """Solicita y valida un número (acepta decimales)."""
     while True:
         try:
             numero = float(input(mensaje))
@@ -277,21 +242,14 @@ def validar_numero(mensaje):
         except ValueError:
             print("❌ Error: Ingrese un número válido.")
 
-
 def validar_numero_entero(mensaje):
-    """
-    Solicita y valida un número entero al usuario.
-
-    Args:
-        mensaje (str): Mensaje a mostrar
-
-    Returns:
-        int: Número entero validado
-    """
-    # TODO: Implementar similar a validar_numero
-    # pero convirtiendo a int en lugar de float
-    pass
-
+    """Solicita y valida un número entero al usuario."""
+    while True:
+        try:
+            numero = int(input(mensaje))
+            return numero
+        except ValueError:
+            print("❌ Error: Ingrese un número entero válido.")
 
 # ============================================
 # SECCIÓN 7: MENÚS (Estudiante 1)
@@ -310,8 +268,7 @@ def mostrar_menu_principal():
     print("5. Limpiar Historial")
     print("6. Salir")
     print("-"*60)
-
-
+ 
 def menu_calculadora_basica():
     """Menú y lógica de la calculadora básica"""
     print("\n--- CALCULADORA BÁSICA ---")
@@ -327,32 +284,116 @@ def menu_calculadora_basica():
 
     if opcion == "7":
         return
+    
+    if opcion not in ["1", "2", "3", "4", "5", "6"]:
+        print("❌ Opción inválida.")
+        return
 
-    # Solicitar números
     num1 = validar_numero("Ingrese el primer número: ")
     num2 = validar_numero("Ingrese el segundo número: ")
 
-    # TODO: Implementar lógica según opción
-    # - Si opcion == "1": resultado = sumar(num1, num2)
-    # - Si opcion == "2": resultado = restar(num1, num2)
-    # - etc.
-    # - Mostrar resultado
-    # - Llamar a agregar_al_historial()
+    try:
+        if opcion == "1":
+            resultado = sumar(num1, num2)
+            operacion = "Suma"
+        elif opcion == "2":
+            resultado = restar(num1, num2)
+            operacion = "Resta"
+        elif opcion == "3":
+            resultado = multiplicar(num1, num2)
+            operacion = "Multiplicación"
+        elif opcion == "4":
+            resultado = dividir(num1, num2)
+            operacion = "División"
+        elif opcion == "5":
+            resultado = modulo(num1, num2)
+            operacion = "Módulo"
+        elif opcion == "6":
+            resultado = potencia(num1, num2)
+            operacion = "Potencia"
 
-    pass
+        print(f"\n✅ El resultado es: {resultado}")
+        
+        # Opcional: Llamar al historial (asegúrate de haber implementado la función de historial antes)
+        # agregar_al_historial(operacion, num1, num2, resultado)
+
+    except ValueError as e:
+        print(f"\n❌ Error: {e}")
 
 
 def menu_conversor_unidades():
     """Menú y lógica del conversor de unidades"""
-    # TODO: Implementar
-    pass
+    print("\n--- CONVERSOR DE UNIDADES DE DATOS ---")
+    print("1. Bytes a Kilobytes")
+    print("2. Kilobytes a Megabytes")
+    print("3. Megabytes a Gigabytes")
+    print("4. Gigabytes a Megabytes")
+    print("5. Megabytes a Kilobytes")
+    print("6. Kilobytes a Bytes")
+    print("7. Volver al menú principal")
+
+    opcion = input("\nSeleccione una opción: ")
+
+    if opcion == "7":
+        return
+        
+    if opcion not in ["1", "2", "3", "4", "5", "6"]:
+        print("❌ Opción inválida.")
+        return
+
+    valor = validar_numero_entero("Ingrese la cantidad a convertir: ")
+
+    if opcion == "1":
+        resultado = bytes_a_kilobytes(valor)
+        print(f"\n✅ {valor} Bytes = {resultado:.4f} Kilobytes")
+    elif opcion == "2":
+        resultado = kilobytes_a_megabytes(valor)
+        print(f"\n✅ {valor} Kilobytes = {resultado:.4f} Megabytes")
+    elif opcion == "3":
+        resultado = megabytes_a_gigabytes(valor)
+        print(f"\n✅ {valor} Megabytes = {resultado:.4f} Gigabytes")
+    elif opcion == "4":
+        resultado = gigabytes_a_megabytes(valor)
+        print(f"\n✅ {valor} Gigabytes = {resultado:.4f} Megabytes")
+    elif opcion == "5":
+        resultado = megabytes_a_kilobytes(valor)
+        print(f"\n✅ {valor} Megabytes = {resultado:.4f} Kilobytes")
+    elif opcion == "6":
+        resultado = kilobytes_a_bytes(valor)
+        print(f"\n✅ {valor} Kilobytes = {resultado:.4f} Bytes")
 
 
 def menu_sistemas_numericos():
     """Menú y lógica de conversión de sistemas numéricos"""
-    # TODO: Implementar
-    pass
+    print("\n--- CALCULADORA DE SISTEMAS NUMÉRICOS ---")
+    print("1. Decimal a Binario")
+    print("2. Decimal a Hexadecimal")
+    print("3. Binario a Decimal")
+    print("4. Hexadecimal a Decimal")
+    print("5. Volver al menú principal")
 
+    opcion = input("\nSeleccione una opción: ")
+
+    if opcion == "5":
+        return
+
+    try:
+        if opcion == "1":
+            num = validar_numero_entero("Ingrese el número decimal: ")
+            print(f"\n✅ En binario es: {decimal_a_binario(num)}")
+        elif opcion == "2":
+            num = validar_numero_entero("Ingrese el número decimal: ")
+            print(f"\n✅ En hexadecimal es: {decimal_a_hexadecimal(num)}")
+        elif opcion == "3":
+            binario = input("Ingrese el número binario (solo 0s y 1s): ")
+            print(f"\n✅ En decimal es: {binario_a_decimal(binario)}")
+        elif opcion == "4":
+            hexadecimal = input("Ingrese el número hexadecimal: ")
+            print(f"\n✅ En decimal es: {hexadecimal_a_decimal(hexadecimal)}")
+        else:
+            print("❌ Opción inválida.")
+    except ValueError as e:
+        print(f"\n❌ Error: {e}")
 
 # ============================================
 # PROGRAMA PRINCIPAL
@@ -376,7 +417,7 @@ def main():
     continuar = True
 
     while continuar:
-        mostrar_menu_principal()
+        mostrar_menu_principal() # Funciona?
 
         opcion = input("\nSeleccione una opción (1-6): ")
 
