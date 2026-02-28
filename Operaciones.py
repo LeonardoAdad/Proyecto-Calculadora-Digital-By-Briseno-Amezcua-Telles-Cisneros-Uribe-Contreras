@@ -5,7 +5,7 @@ Proyecto de Tecnología Digital
 Equipo:
 - Estudiante 1: [Leonardo Adad Briseño Amezcua] - Estructura Principal y Gestión de Datos
 - Estudiante 2: [Diego Telles Cisneros] - Funciones Matemáticas
-- Estudiante 3: [Nombre] - Conversores y Sistema de Historial
+- Estudiante 3: [Maximo Fernando Uribe Contreras] - Conversores y Sistema de Historial
 
 Fecha: Febrero 2026
 Universidad de Guadalajara - Campus GDL
@@ -108,7 +108,6 @@ def hexadecimal_a_decimal(hexadecimal):
 
     return decimal
 
-
 # ============================================
 # SECCIÓN 3: CONVERSIÓN DE UNIDADES (Estudiante 3)
 # ============================================
@@ -136,97 +135,80 @@ def bytes_a_kilobytes(kb):
 # ============================================
 
 def agregar_al_historial(operacion, num1, num2, resultado):
-    """
-    Agrega una operación al historial.
-
-    Args:
-        operacion (str): Tipo de operación (ej: "Suma", "División")
-        num1 (float): Primer número
-        num2 (float): Segundo número
-        resultado (float): Resultado de la operación
-    """
     global historial
 
-    # TODO: Implementar
-    # 1. Crear string con formato: "operación: num1 op num2 = resultado"
-    # 2. Agregar al final de la lista historial
-    # 3. Si historial tiene más de 10 elementos, eliminar el primero
+    fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Ejemplo de formato:
-    # fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # entrada = f"{fecha_hora} | {operacion}: {num1} + {num2} = {resultado}"
-    # historial.append(entrada)
+    # Diccionario de simbolos
+    simbolos = {
+        "Suma": "+",
+        "Resta": "-",
+        "Multiplicación": "*",
+        "División": "/",
+        "Módulo": "%",
+        "Potencia": "**"
+    }
 
-    pass
+    simbolo = simbolos.get(operacion, "?")
+
+    entrada = f"{fecha_hora} | {operacion}: {num1} {simbolo} {num2} = {resultado}"
+
+    historial.append(entrada)
+
+    if len(historial) > 10:
+        historial.pop(0)
+
+    guardar_historial_archivo()
 
 
 def mostrar_historial():
-    """
-    Muestra el historial de operaciones.
-    """
     global historial
 
-    # TODO: Implementar
-    # 1. Verificar si historial está vacío
-    # 2. Si está vacío, mostrar mensaje
-    # 3. Si no, iterar sobre historial y mostrar cada operación numerada
+    if not historial:
+        print("\nEl historial está vacío.")
+        return
 
-    pass
+    print("\nHISTORIAL DE OPERACIONES:")
+    print("-" * 50)
+
+    for i, operacion in enumerate(historial, start=1):
+        print(f"{i}. {operacion}")
 
 
 def limpiar_historial():
-    """
-    Limpia el historial de operaciones.
-    """
     global historial
-
-    # TODO: Implementar
-    # Vaciar la lista historial
-    pass
-
+    historial.clear()
 
 # ============================================
-# SECCIÓN 5: GESTIÓN DE ARCHIVOS (Estudiante 1)
+# SECCIÓN 5: GESTIÓN DE ARCHIVOS (Estudiante 3)
 # ============================================
 
 def guardar_historial_archivo():
-    """
-    Guarda el historial en el archivo datos/historial.txt
-    """
     global historial
 
-    # TODO: Implementar
-    # 1. Crear carpeta "datos" si no existe (usar os.makedirs())
-    # 2. Abrir archivo "datos/historial.txt" en modo escritura ("w")
-    # 3. Escribir cada línea del historial al archivo
-    # 4. Cerrar archivo
+    # Comprobar si existe la carpeta y crear una si no existe
+    if not os.path.exists("datos"):
+        os.makedirs("datos")
 
-    # Ejemplo:
-    # if not os.path.exists("datos"):
-    #     os.makedirs("datos")
-    #
-    # with open("datos/historial.txt", "w") as archivo:
-    #     for linea in historial:
-    #         archivo.write(linea + "\n")
-
-    pass
+    with open("datos/historial.txt", "w", encoding="utf-8") as archivo:
+        for linea in historial:
+            archivo.write(linea + "\n")
 
 
 def cargar_historial_archivo():
-    """
-    Carga el historial desde el archivo datos/historial.txt
-    """
     global historial
 
-    # TODO: Implementar
-    # 1. Verificar si el archivo existe (os.path.exists())
-    # 2. Si existe:
-    #    - Abrir archivo en modo lectura ("r")
-    #    - Leer todas las líneas
-    #    - Agregar cada línea (sin \n) a la lista historial
-    # 3. Si no existe, no hacer nada
+    if os.path.exists("datos/historial.txt"):
+        with open("datos/historial.txt", "r", encoding="utf-8") as archivo:
+            lineas = archivo.readlines()
 
-    pass
+            historial.clear()
+
+            for linea in lineas:
+                historial.append(linea.strip())
+
+            if len(historial) > 10:
+                historial[:] = historial[-10:]
 
 
 # ============================================
@@ -313,9 +295,7 @@ def menu_calculadora_basica():
             operacion = "Potencia"
 
         print(f"\n✅ El resultado es: {resultado}")
-        
-        # Opcional: Llamar al historial (asegúrate de haber implementado la función de historial antes)
-        # agregar_al_historial(operacion, num1, num2, resultado)
+        agregar_al_historial(operacion, num1, num2, resultado)
 
     except ValueError as e:
         print(f"\n❌ Error: {e}")
