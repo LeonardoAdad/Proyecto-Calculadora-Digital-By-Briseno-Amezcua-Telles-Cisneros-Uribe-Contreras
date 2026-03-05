@@ -222,7 +222,7 @@ def validar_numero(mensaje):
             numero = float(input(mensaje))
             return numero
         except ValueError:
-            print("❌ Error: Ingrese un número válido.")
+            print(" Error: Ingrese un número válido.")
 
 def validar_numero_entero(mensaje):
     """Solicita y valida un número entero al usuario."""
@@ -231,8 +231,7 @@ def validar_numero_entero(mensaje):
             numero = int(input(mensaje))
             return numero
         except ValueError:
-            print("❌ Error: Ingrese un número entero válido.")
-
+            print(" Error: Ingrese un número entero válido.")
 # ============================================
 # SECCIÓN 7: MENÚS (Estudiante 1)
 # ============================================
@@ -268,7 +267,7 @@ def menu_calculadora_basica():
         return
     
     if opcion not in ["1", "2", "3", "4", "5", "6"]:
-        print("❌ Opción inválida.")
+        print(" Opción inválida.")
         return
 
     num1 = validar_numero("Ingrese el primer número: ")
@@ -294,11 +293,11 @@ def menu_calculadora_basica():
             resultado = potencia(num1, num2)
             operacion = "Potencia"
 
-        print(f"\n✅ El resultado es: {resultado}")
+        print(f"\n El resultado es: {resultado}")
         agregar_al_historial(operacion, num1, num2, resultado)
 
     except ValueError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
 
 
 def menu_conversor_unidades():
@@ -318,29 +317,29 @@ def menu_conversor_unidades():
         return
         
     if opcion not in ["1", "2", "3", "4", "5", "6"]:
-        print("❌ Opción inválida.")
+        print(" Opción inválida.")
         return
 
     valor = validar_numero_entero("Ingrese la cantidad a convertir: ")
 
     if opcion == "1":
         resultado = bytes_a_kilobytes(valor)
-        print(f"\n✅ {valor} Bytes = {resultado:.4f} Kilobytes")
+        print(f"\n {valor} Bytes = {resultado:.4f} Kilobytes")
     elif opcion == "2":
         resultado = kilobytes_a_megabytes(valor)
-        print(f"\n✅ {valor} Kilobytes = {resultado:.4f} Megabytes")
+        print(f"\n {valor} Kilobytes = {resultado:.4f} Megabytes")
     elif opcion == "3":
         resultado = megabytes_a_gigabytes(valor)
-        print(f"\n✅ {valor} Megabytes = {resultado:.4f} Gigabytes")
+        print(f"\n {valor} Megabytes = {resultado:.4f} Gigabytes")
     elif opcion == "4":
         resultado = gigabytes_a_megabytes(valor)
-        print(f"\n✅ {valor} Gigabytes = {resultado:.4f} Megabytes")
+        print(f"\n {valor} Gigabytes = {resultado:.4f} Megabytes")
     elif opcion == "5":
         resultado = megabytes_a_kilobytes(valor)
-        print(f"\n✅ {valor} Megabytes = {resultado:.4f} Kilobytes")
+        print(f"\n {valor} Megabytes = {resultado:.4f} Kilobytes")
     elif opcion == "6":
         resultado = kilobytes_a_bytes(valor)
-        print(f"\n✅ {valor} Kilobytes = {resultado:.4f} Bytes")
+        print(f"\n {valor} Kilobytes = {resultado:.4f} Bytes")
 
 
 def menu_sistemas_numericos():
@@ -360,20 +359,20 @@ def menu_sistemas_numericos():
     try:
         if opcion == "1":
             num = validar_numero_entero("Ingrese el número decimal: ")
-            print(f"\n✅ En binario es: {decimal_a_binario(num)}")
+            print(f"\n En binario es: {decimal_a_binario(num)}")
         elif opcion == "2":
             num = validar_numero_entero("Ingrese el número decimal: ")
-            print(f"\n✅ En hexadecimal es: {decimal_a_hexadecimal(num)}")
+            print(f"\n En hexadecimal es: {decimal_a_hexadecimal(num)}")
         elif opcion == "3":
             binario = input("Ingrese el número binario (solo 0s y 1s): ")
-            print(f"\n✅ En decimal es: {binario_a_decimal(binario)}")
+            print(f"\n En decimal es: {binario_a_decimal(binario)}")
         elif opcion == "4":
             hexadecimal = input("Ingrese el número hexadecimal: ")
-            print(f"\n✅ En decimal es: {hexadecimal_a_decimal(hexadecimal)}")
+            print(f"\n En decimal es: {hexadecimal_a_decimal(hexadecimal)}")
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
     except ValueError as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
 
 # ============================================
 # PROGRAMA PRINCIPAL
@@ -392,7 +391,7 @@ def main():
 
     # Cargar historial al iniciar
     cargar_historial_archivo()
-    print("\n✅ Historial cargado desde archivo.")
+    print("\n Historial cargado desde archivo.")
 
     continuar = True
 
@@ -417,18 +416,18 @@ def main():
             confirmacion = input("\n¿Está seguro de limpiar el historial? (s/n): ")
             if confirmacion.lower() == "s":
                 limpiar_historial()
-                print("✅ Historial limpiado.")
-
+                print(" Historial limpiado.")
+                
         elif opcion == "6":
-            print("\n💾 Guardando historial...")
+            print("\n Guardando historial...")
             guardar_historial_archivo()
-            print("✅ Historial guardado en datos/historial.txt")
+            print(" Historial guardado en datos/historial.txt")
             print("\n¡Gracias por usar la Calculadora Multifuncional!")
             print("¡Hasta pronto! 👋")
             continuar = False
 
         else:
-            print("\n❌ Opción inválida. Por favor seleccione 1-6.")
+            print("\n Opción inválida. Por favor seleccione 1-6.")
 
     print("\nPrograma terminado.")
 
